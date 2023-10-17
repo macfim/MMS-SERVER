@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -30,7 +29,7 @@ export class AuthController {
     return this.authService.loginLocal(data);
   }
 
-  @Get('logout')
+  @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@GetCurrentUser('sub') userId: string) {
     await this.authService.logout(userId);
@@ -38,7 +37,7 @@ export class AuthController {
 
   @Public()
   @UseGuards(RefreshTokenGuard)
-  @Get('refresh')
+  @Post('refresh')
   refreshTokens(@GetCurrentUser() user: JwtPayload & { refreshToken: string }) {
     return this.authService.refreshTokens(user.sub, user.refreshToken);
   }
