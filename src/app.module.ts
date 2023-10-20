@@ -10,6 +10,7 @@ import { LoggerModule } from 'nestjs-pino';
 import envConfig from './config/env.config';
 import { validate } from './env.validation';
 import { MoneyStacksModule } from './money-stacks/money-stacks.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { MoneyStacksModule } from './money-stacks/money-stacks.module';
       },
     }),
     MoneyStacksModule,
+    TransactionsModule,
   ],
   controllers: [],
   providers: [

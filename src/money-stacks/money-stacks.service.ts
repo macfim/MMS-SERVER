@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { MoneyStack, Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { DatabaseService } from 'src/database/database.service';
@@ -25,6 +29,27 @@ export class MoneyStacksService {
 
   create(data: Prisma.MoneyStackCreateArgs['data']) {
     return this.moneyStacks.create({ data });
+  }
+
+  async reduceMoneyStack(
+    id: MoneyStack['id'],
+    amount: MoneyStack['currentAmount'],
+  ) {
+    const moneyStack = await this.findOneById(id);
+
+    const currentAmount = moneyStack?.currentAmount;
+
+    if (!currentAmount) {
+      throw new BadRequestException('No Amount Defined');
+    }
+
+    return this.moneyStacks.update({
+      where: { id },
+      data: {
+        previousAmount: currentAmount,
+        currentAmount: currentAmount - amount,
+      },
+    });
   }
 
   delete(id: MoneyStack['id']) {
