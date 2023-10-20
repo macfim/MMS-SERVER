@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { MoneyStack, Prisma } from '@prisma/client';
+import { MoneyStack, Prisma, User } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -13,6 +13,14 @@ export class MoneyStacksService {
 
   constructor(private readonly databaseService: DatabaseService) {
     this.moneyStacks = this.databaseService.moneyStack;
+  }
+
+  findManyByUserId(userId: User['id']) {
+    return this.moneyStacks.findMany({
+      where: {
+        userId,
+      },
+    });
   }
 
   async findOneById(id: MoneyStack['id']) {

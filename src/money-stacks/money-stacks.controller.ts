@@ -7,6 +7,11 @@ import { GetCurrentUser } from 'src/shared/decorators';
 export class MoneyStacksController {
   constructor(private readonly moneyStacksService: MoneyStacksService) {}
 
+  @Get()
+  getMany(@GetCurrentUser('sub') userId: string) {
+    return this.moneyStacksService.findManyByUserId(userId);
+  }
+
   @Get(':id')
   getOne(@Param('id') id: string) {
     return this.moneyStacksService.findOneById(id);
