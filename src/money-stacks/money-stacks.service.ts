@@ -21,7 +21,7 @@ export class MoneyStacksService {
         userId,
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
     });
   }
