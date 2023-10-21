@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto';
 import { GetCurrentUser } from 'src/shared/decorators';
@@ -10,6 +10,21 @@ export class TransactionsController {
     private readonly transactionsService: TransactionsService,
     private readonly moneyStacksService: MoneyStacksService,
   ) {}
+
+  @Get()
+  getMany(
+    @GetCurrentUser('sub') userId: string,
+    @Query('moneyStackId') moneyStackId: string,
+  ) {
+    if (moneyStackId) {
+      return this.transactionsService.findManyByMoneyStackId(
+        moneyStackId,
+        userId,
+      );
+    }
+
+    return this.transactionsService.findManyByUserId(userId);
+  }
 
   @Get(':id')
   getOne(@Param('id') id: string) {
