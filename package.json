@@ -6,7 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "prisma": {
-    "schema": "src/database/schema.prisma"
+    "schema": "src/database/schema.prisma",
+    "seed": "ts-node src/database/seed/seed.ts"
   },
   "scripts": {
     "build": "nest build",
