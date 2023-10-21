@@ -20,6 +20,9 @@ export class MoneyStacksService {
       where: {
         userId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
