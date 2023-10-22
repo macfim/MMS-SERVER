@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { MoneyStacksService } from './money-stacks.service';
 import { CreateMoneyStackDto } from './dto';
 import { GetCurrentUser } from 'src/shared/decorators';
@@ -32,5 +32,10 @@ export class MoneyStacksController {
       currentAmount: initialAmount,
       user: { connect: { id: userId } },
     });
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.moneyStacksService.delete(id);
   }
 }
